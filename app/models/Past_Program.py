@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import BaseModel
 
 class Program(BaseModel):
@@ -6,5 +7,5 @@ class Program(BaseModel):
     technology: str
     description: str
     mentor:str
-    mentee:list[str]
+    mentee:List[str]
     codelink:str

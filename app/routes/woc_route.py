@@ -1,6 +1,6 @@
 import random
 from fastapi import APIRouter, Depends,HTTPException,Query
-from fastapi import  Request, Header
+from fastapi import  Request
 from jsonschema import ValidationError
 from models.Timeline import Timeline
 from models.Project import Project
@@ -16,7 +16,7 @@ from google.auth.transport import requests
 from fastapi.responses import JSONResponse
 from bson import ObjectId
 from dotenv import load_dotenv
-from typing import Annotated, Dict, List
+from typing import Dict, List
 from routes.auth import create_access_token, get_current_user,get_current_user_role,role_required
 
 load_dotenv()  
@@ -196,8 +196,8 @@ async def change_status(request:Request):
 #token verification
 @route.get("/token")
 async def get_user( 
-    access_token: Annotated[str | None, Header()] = None,
-    refresh_token: Annotated[str | None, Header()] = None): 
+    access_token: str = None , # If you know it will always be a string
+    refresh_token: str = None):
     data = {
         "client_id": {GOOGLE_CLIENT_ID},
         "client_secret": {GOOGLE_CLIENT_SECRET},

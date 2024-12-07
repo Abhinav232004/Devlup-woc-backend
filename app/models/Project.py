@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import BaseModel
 
 class Project(BaseModel):
@@ -9,7 +10,7 @@ class Project(BaseModel):
     description: str
     mentor:str
     completed:bool=False
-    mentee:list[str]=[]
+    mentee:List[str]=[]
     codelink: str = ""
     year:str
     progress:str=""

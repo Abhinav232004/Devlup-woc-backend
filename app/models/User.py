@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import BaseModel
 from models.Project import Project
 class User(BaseModel):
@@ -11,4 +12,4 @@ class User(BaseModel):
     role:str
     email:str
     phonenumber:int
-    projects : list[Project]=[]
+    projects : List[Project]=[]
