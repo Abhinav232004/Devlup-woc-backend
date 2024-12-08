@@ -1,9 +1,10 @@
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
+from motor.motor_asyncio import AsyncIOMotorClient
 load_dotenv()
-MONGO_URL= os.environ.get("MONGO_URL")
-client = MongoClient({MONGO_URL})
+MONGO_HOST = os.getenv("MONGO_HOST")
+client = AsyncIOMotorClient(f"mongodb://{MONGO_HOST}:27017")
 
 try:
     client.admin.command('ping')
