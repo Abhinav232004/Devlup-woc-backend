@@ -1,22 +1,15 @@
 import random
 from fastapi import APIRouter, Depends,HTTPException,Query
-from fastapi import  Request
+from fastapi import  Request, Header
 from jsonschema import ValidationError
-from models.Timeline import Timeline
-from models.Project import Project
-from models.Idea import Idea
-from models.User import User
-from models.Mentor import Mentor
-from models.Proposal import Proposal
-from config.database import collection_projects
-from config.database import collection_timeline,collection_mentors,collection_ideas,collection_programs,collection_proposals,collection_progress
-from config.database import collection_users
+from models import Project, Timeline, Idea, User, Mentor, Proposal
+from config import collection_projects,collection_timeline,collection_mentors,collection_ideas,collection_programs,collection_proposals,collection_progress,collection_users
 from starlette.requests import Request  
 from google.auth.transport import requests
 from fastapi.responses import JSONResponse
 from bson import ObjectId
 from dotenv import load_dotenv
-from typing import Dict, List
+from typing import Union, Dict, List
 from routes.auth import create_access_token, get_current_user,get_current_user_role,role_required
 
 load_dotenv()  
@@ -196,8 +189,9 @@ async def change_status(request:Request):
 #token verification
 @route.get("/token")
 async def get_user( 
-    access_token: str = None , # If you know it will always be a string
-    refresh_token: str = None):
+    access_token: Union[str, None] = Header(default=None),
+    refresh_token: Union[str, None] = Header(default=None)
+    ): 
     data = {
         "client_id": {GOOGLE_CLIENT_ID},
         "client_secret": {GOOGLE_CLIENT_SECRET},
