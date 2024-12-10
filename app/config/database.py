@@ -1,9 +1,10 @@
 from pymongo import MongoClient
 import os
-MONGO_URL = os.getenv('MONGO_URL')
+from dotenv import load_dotenv
+load_dotenv()
+MONGO_URL= os.environ.get("MONGO_URL")
 if not MONGO_URL:
-    raise ValueError("MongoDB connection URL not set")
-print(MONGO_URL)
+    raise ValueError("You must set the MONGO_URL environment variable")
 client = MongoClient({MONGO_URL})
 
 try:
