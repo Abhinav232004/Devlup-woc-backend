@@ -410,6 +410,11 @@ async def addproposal(request:Request):
    proposal = collection_proposals.insert_one(data)
    proposal = Proposal(**proposal)
    return{"success":"true","proposal":proposal}
+@route.get("/allproposals",dependencies=[Depends(role_required(["scrummaster"]))])
+async def allproposals():
+   proposals = collection_proposals.find({})
+   proposals = [Proposal(**proposal) for proposal in proposals]
+   return proposals
 
 @route.delete("/deleteproposal")
 async def deleteproposal(user_id: str = Query(...), title: str = Query(...),id:str = Query(...),token_data: dict = Depends(get_current_user)
