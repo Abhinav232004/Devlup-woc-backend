@@ -426,7 +426,8 @@ async def deleteproposal(user_id: str = Query(...), title: str = Query(...),id:s
     )
    user = collection_users.find_one({"id":user_id})
    user = User(**user)
-   result = collection_proposals.delete_one({"id": id})
+   email = user.email
+   result = collection_proposals.delete_one({"title": title, "email": email})
    if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Proposal not found")
    return{"success":"true","msg":"Deleted proposal","user":user.dict()}
